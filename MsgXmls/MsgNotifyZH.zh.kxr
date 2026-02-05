@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xml:lang="zh" xmlns="http://www.kuka.com/schemas/kxr/2009">
+  <module name="MsgNotifyZH">
+    <message key="101001">
+          <text>这是MsgNotfyZH第一条信息</text>
+    </message>
+    <message key="101002">
+          <text>这是MsgNotfyZH第二条信息，带%1的信息</text>
+    </message>
+	<message key="101003">
+          <text>这是MsgNotfyZH第三条信息，带%1的信息</text>
+    </message>
+	<message key="101004">
+          <text>这是MsgNotfyZH第四条信息</text>
+    </message>
+	<message key="101005">
+          <text>这是MsgNotfyZH第五条信息</text>
+    </message>
+	<message key="101006">
+          <text>这是MsgNotfyZH第六条信息</text>
+    </message>
+	<message key="101007">
+          <text>这是MsgNotfyZH第七条信息</text>
+    </message>
+	<message key="101008">
+          <text>这是MsgNotfyZH第八条信息</text>
+    </message>
+	<message key="101009">
+          <text>这是MsgNotfyZH第九条信息</text>
+    </message>
+	<message key="101010">
+          <text>这是MsgNotfyZH第十条信息</text>
+    </message>
+	<message key="101011">
+          <text>这是MsgNotfyZH第十一条信息</text>
+    </message>
+	<message key="101012">
+          <text>这是MsgNotfyZH第十二条信息</text>
+    </message>
+	<message key="101013">
+          <text>这是MsgNotfyZH第十三条信息</text>
+    </message>
+	<message key="101014">
+          <text>这是MsgNotfyZH第十四条信息</text>
+    </message>
+	<message key="101015">
+          <text>这是MsgNotfyZH第十五条信息</text>
+    </message>
+	<message key="101016">
+          <text>这是MsgNotfyZH第十六条信息</text>
+    </message>
+  </module>
+  
+</resources> 
