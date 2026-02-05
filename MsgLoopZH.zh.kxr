@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xml:lang="zh" xmlns="http://www.kuka.com/schemas/kxr/2009">
+  <module name="MsgLoopZH">
+    <message key="210001">
+          <text>这是MsgLoopZH第一条信息</text>
+    </message>
+    <message key="210002">
+          <text>这是MsgLoopZH第二条信息，带%1的信息</text>
+    </message>
+	<message key="210003">
+          <text>这是MsgLoopZH第三条信息，带%1的信息</text>
+    </message>
+	<message key="210004">
+          <text>这是MsgLoopZH第四条信息</text>
+    </message>
+	<message key="210005">
+          <text>这是MsgLoopZH第五条信息</text>
+    </message>
+	<message key="210006">
+          <text>这是MsgLoopZH第六条信息</text>
+    </message>
+	<message key="210007">
+          <text>这是MsgLoopZH第七条信息</text>
+    </message>
+	<message key="210008">
+          <text>这是MsgLoopZH第八条信息</text>
+    </message>
+	<message key="210009">
+          <text>这是MsgLoopZH第九条信息</text>
+    </message>
+	<message key="210010">
+          <text>这是MsgLoopZH第十条信息</text>
+    </message>
+	<message key="210011">
+          <text>这是MsgLoopZH第十一条信息</text>
+    </message>
+	<message key="210012">
+          <text>这是MsgLoopZH第十二条信息</text>
+    </message>
+	<message key="210013">
+          <text>这是MsgLoopZH第十三条信息</text>
+    </message>
+	<message key="210014">
+          <text>这是MsgLoopZH第十四条信息</text>
+    </message>
+	<message key="210015">
+          <text>这是MsgLoopZH第十五条信息</text>
+    </message>
+	<message key="210016">
+          <text>这是MsgLoopZH第十六条信息</text>
+    </message>
+  </module>
+  
+</resources> 
