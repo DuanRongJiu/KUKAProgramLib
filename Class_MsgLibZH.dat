@@ -1,0 +1,10 @@
+&ACCESS RO1
+&REL 1
+&COMMENT V01
+&PARAM EDITMASK = *
+&PARAM TEMPLATE = C:\KRC\Roboter\Template\vorgabe
+DEFDAT  Class_MsgLibZH
+
+DECL INT lnHandleZH=10006
+
+ENDDAT

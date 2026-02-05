@@ -1,0 +1,119 @@
+&ACCESS R1
+DEF  Class_UserSPS ( )
+;FOLD Introduction
+;**************************************************
+;Function : SPS Function                          *
+;Author : Jill                                    *
+;Date : 2023/1/18                                 *
+;employ: $FLAG[900]                               *
+;**************************************************
+
+;Twinkle(INT TIMER_N:IN,REAL Hz:IN,outNr:IN ) SPS 
+;temporary_stop(INT signal_Stop_n:IN,INT signal_reset_n:IN) SPS
+;User_key1(OUT_SIGNAL:IN) SPS
+;User_key2(OUT_SIGNAL:IN) SPS
+;User_key3(OUT_SIGNAL:IN) SPS
+;User_key4(OUT_SIGNAL:IN) SPS
+
+;ENDFOLD
+END
+
+;FOLD ;%{H}
+;FOLD Twinkle(INT TIMER_N:IN,REAL Hz:IN,outNr:IN ) SPS   
+;INT TIMER_N:$TIMER[Nr]
+;REAL Hz:Twinkle Twinkle
+;employ:$TIMER[TIMER_N]
+;outNr: $OUT Number
+
+GLOBAL DEF Twinkle(TIMER_N:IN,Hz:IN,outNr:IN)
+;sps 
+INT TIMER_N,outNr
+REAL Hz,Time
+Time = Hz*500
+$TIMER_STOP[TIMER_N] = FALSE
+IF $TIMER[TIMER_N]>=Time THEN
+   $TIMER[TIMER_N] = Time*(-1)
+ENDIF
+$OUT[outNr]=$TIMER_FLAG[TIMER_N]
+END
+;ENDFOLD
+;FOLD temporary_stop(INT signal_Stop_n:IN,INT signal_reset_n:IN) SPS
+;INT signal_Stop_n:STOP Signal $IN[Nr]
+;INT signal_reset_n: STOP reset signal $IN[Nr]
+GLOBAL DEF temporary_stop(signal_Stop_n:IN,signal_reset_n:IN)
+INT signal_Stop_n,signal_reset_n
+BOOL bTemp
+IF $IN[signal_reset_n]==FALSE THEN 
+  $FLAG[900]=FALSE 
+ENDIF
+IF ($IN[signal_reset_n]==TRUE) AND ($FLAG[900]==FALSE)  THEN
+  $FLAG[900]=TRUE  
+  ROB_STOP_RELEASE( )
+ENDIF
+IF $IN[signal_Stop_n]==FALSE THEN 
+  $FLAG[900]=FALSE  
+ENDIF
+IF ($IN[signal_Stop_n]==TRUE) AND ($FLAG[900]==FALSE)  THEN
+  $FLAG[900]=TRUE  
+  bTemp=ROB_STOP(#RAMP_DOWN)
+ENDIF
+
+END
+;ENDFOLD
+;FOLD User_key1(INT OUT_SIGNAL:IN) SPS
+   ;INT OUT_SIGNAL: $OUT[Nr]
+GLOBAL DEF User_key1(OUT_SIGNAL:IN)
+INT OUT_SIGNAL
+
+IF IS_KEY_PRESSED(14)==FALSE THEN 
+  $flag[996]=FALSE  
+ENDIF
+IF (IS_KEY_PRESSED(14)==TRUE) AND ($flag[996]==FALSE) AND ($T1 OR $T2) AND ($SAFETY_SW==#PRESSED)  THEN
+  $flag[996]=TRUE  
+  $OUT[OUT_SIGNAL] = NOT $OUT[OUT_SIGNAL]
+ENDIF  
+END
+;ENDFOLD
+;FOLD User_key2(INT OUT_SIGNAL:IN) SPS
+   ;INT OUT_SIGNAL: $OUT[Nr]
+GLOBAL DEF User_key2(OUT_SIGNAL:IN)
+INT OUT_SIGNAL
+
+IF IS_KEY_PRESSED(15)==FALSE THEN 
+  $flag[997]=FALSE  
+ENDIF
+IF (IS_KEY_PRESSED(15)==TRUE) AND ($flag[997]==FALSE) AND ($T1 OR $T2) AND ($SAFETY_SW==#PRESSED)  THEN
+  $flag[997]=TRUE  
+     $OUT[OUT_SIGNAL] = NOT $OUT[OUT_SIGNAL]
+ENDIF  
+END
+;ENDFOLD
+;FOLD User_key3(INT OUT_SIGNAL:IN) SPS
+   ;INT OUT_SIGNAL: $OUT[Nr]
+GLOBAL DEF User_key3(OUT_SIGNAL:IN)
+INT OUT_SIGNAL
+
+IF IS_KEY_PRESSED(16)==FALSE THEN 
+  $flag[998]=FALSE  
+ENDIF
+IF (IS_KEY_PRESSED(16)==TRUE) AND ($flag[998]==FALSE) AND ($T1 OR $T2) AND ($SAFETY_SW==#PRESSED)  THEN
+  $flag[998]=TRUE  
+  $OUT[OUT_SIGNAL] = NOT $OUT[OUT_SIGNAL]
+ENDIF  
+END
+;ENDFOLD
+;FOLD User_key4(INT OUT_SIGNAL:IN) SPS
+   ;INT OUT_SIGNAL: $OUT[Nr]
+GLOBAL DEF User_key4(OUT_SIGNAL:IN)
+INT OUT_SIGNAL
+
+IF IS_KEY_PRESSED(17)==FALSE THEN 
+  $flag[999]=FALSE  
+ENDIF
+IF (IS_KEY_PRESSED(17)==TRUE) AND ($flag[999]==FALSE) AND ($T1 OR $T2) AND ($SAFETY_SW==#PRESSED)  THEN
+  $flag[999]=TRUE  
+  $OUT[OUT_SIGNAL] = NOT $OUT[OUT_SIGNAL]
+ENDIF  
+END
+;ENDFOLD
+;ENDFOLD

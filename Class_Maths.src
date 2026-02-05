@@ -1,0 +1,48 @@
+&ACCESS R1
+&REL 1
+DEF  Class_Maths ( )
+;FOLD INtroduction
+;**************************************************
+;Function : Class_Maths                           *
+;Author : Jill                                    *
+;Date : 2023/1/18                                 *
+;**************************************************
+;deffct real max_real(real a:IN, real b:IN)
+;deffct real mIN_real(real a:IN, real b:IN)
+;DEFFCT INT remaINder(INT a:IN, INT b:IN)
+
+;ENDFOLD
+END
+
+;FOLD ;%{H}
+;FOLD REAL MaxReal(REAL a:IN,REAL b:IN)
+GLOBAL DEFFCT REAL MaxReal(a:IN,b:IN)
+REAL a,b
+  IF a>b THEN
+    RETURN(a)
+  ELSE
+    RETURN(b)
+  ENDIF
+ENDFCT
+;ENDFOLD
+
+;FOLD REAL MinReal(REAL a:IN,REAL b:IN)
+GLOBAL DEFFCT REAL MinReal(a:IN,b:IN)
+real a,b
+  IF a<b THEN
+    RETURN(a)
+  ELSE
+    RETURN(b)
+  endIF
+endfct
+;ENDFOLD
+
+;FOLD INT Remainder(INT a:IN,INT b:IN)
+GLOBAL DEFFCT INT Remainder(a:IN,b:IN)
+   INT a,b
+   RETURN(a-a/b*b)
+ENDFCT 
+;ENDFOLD
+
+
+;ENDFOLD

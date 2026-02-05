@@ -1,0 +1,45 @@
+&ACCESS RVO1
+DEF Class_WriteFile(string[]:IN)
+DECL INT HANDLE
+DECL MODUS_T MODEWRITE
+DECL STATE_T STAT
+;DECL  write to the text
+DECL CHAR string[]
+;DECL the control char
+DECL char nl
+DECL char re
+
+;FOLD INI;%{PE}
+  ;FOLD BASISTECH INI
+    GLOBAL INTERRUPT DECL 3 WHEN $STOPMESS==TRUE DO IR_STOPM ( )
+    INTERRUPT ON 3 
+    BAS (#INITMOV,0 )
+  ;ENDFOLD (BASISTECH INI)
+  ;FOLD USER INI
+    ;Make your modifications here
+
+  ;ENDFOLD (USER INI)
+;ENDFOLD (INI)
+
+MODEWRITE=#SYNC
+HANDLE=0
+
+;ini the control char
+nl=10
+re=13
+;create a file under C:\KRC\ROBOTR\USERFILES
+CWRITE($FCT_CALL,STAT,MODEWRITE,"krl_fopen","TEST.log","a",HANDLE)
+;CWRITE($FCT_CALL,STAT,MODEWRITE,"krl_fseek",HANDLE,"#SEEK_END")
+
+
+;write data to txt
+;CWRITE($FCT_CALL,STAT,MODEWRITE,"krl_fwriteln",HANDLE,RE)
+;CWRITE($FCT_CALL,STAT,MODEWRITE,"krl_fwriteln",HANDLE,NL)
+CWRITE($FCT_CALL,STAT,MODEWRITE,"krl_fwriteln",HANDLE,string[])
+
+
+;close the file
+CWRITE($FCT_CALL,STAT,MODEWRITE,"krl_fclose",HANDLE)
+
+
+END

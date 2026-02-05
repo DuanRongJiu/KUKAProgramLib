@@ -1,0 +1,222 @@
+&ACCESS RV1
+&REL 1
+DEF  Class_Cylinder ( )
+;FOLD Introduction
+;**************************************************
+;Function : Class_Cylinder                        *
+;Author : Jill                                    *
+;Date : 2023/1/18                                 *
+;**************************************************
+;Cylinder_FWD1()
+;Cylinder_BWD1()
+;Cylinder_FWD2()
+;Cylinder_BWD2()
+;Cylinder_FWD3()
+;Cylinder_BWD3()
+;Cylinder_FWD4()
+;Cylinder_BWD4()
+;Signal in Class_Cylinder.dat
+
+;ENDFOLD
+END
+;FOLD ;%{H}
+;FOLD Cylinder_FWD1()
+GLOBAL DEF Cylinder_FWD1()
+  BOOL IS_forward
+  INT timeout
+  timeout = 5000 
+   O_Cylinder_FWD1 = TRUE
+   O_Cylinder_BWD1 = FALSE 
+   IS_forward=(NOT I_Cylinder_BWD1 AND I_Cylinder_FWD1)
+   $TIMER_FLAG[61] = FALSE
+   $TIMER[61]=0
+    WAIT SEC 0
+    $TIMER_STOP[61]=FALSE
+    WHILE (($TIMER[61]<timeout) AND (NOT IS_forward))
+         WAIT SEC 0.1
+      IS_forward=(NOT I_Cylinder_BWD1  AND  I_Cylinder_FWD1)    
+    ENDWHILE
+    $TIMER_STOP[61]=TRUE
+    $TIMER[61]=0
+    IF IS_forward == FALSE THEN
+       MsgQuit("Cylinder1 forward Timer out","Cylinder_FWD1")
+       HALT
+    ELSE
+       RETURN
+    ENDIF 
+END 
+;ENDFOLD
+;FOLD Cylinder_BWD1()
+GLOBAL DEF Cylinder_BWD1() 
+  BOOL IS_backward
+  INT timeout
+  timeout = 5000 
+   O_Cylinder_FWD1 = FALSE
+   O_Cylinder_BWD1 = TRUE
+   IS_backward=(I_Cylinder_BWD1 AND NOT I_Cylinder_FWD1)
+   $TIMER_FLAG[61] = FALSE
+   $TIMER[61]=0
+    WAIT SEC 0
+    $TIMER_STOP[61]=FALSE
+    WHILE (($TIMER[61]<timeout) AND (NOT IS_backward))
+         WAIT SEC 0.1
+      IS_backward=(I_Cylinder_BWD1 AND NOT I_Cylinder_FWD1)    
+    ENDWHILE
+    $TIMER_STOP[61]=TRUE
+    IF IS_backward == FALSE THEN 
+       MsgQuit("Cylinder1 backward Timer out","Cylinder_BWD1")
+       HALT
+    ELSE
+       RETURN
+    ENDIF 
+END 
+;ENDFOLD
+;FOLD Cylinder_FWD2()
+GLOBAL DEF Cylinder_FWD2()
+  BOOL IS_forward
+  INT timeout
+  timeout = 5000 
+   O_Cylinder_FWD2 = TRUE
+   O_Cylinder_BWD2 = FALSE 
+   IS_forward=(NOT I_Cylinder_BWD2 AND I_Cylinder_FWD2)
+   $TIMER[62]=0
+    WAIT SEC 0
+    $TIMER_STOP[62]=FALSE
+    WHILE (($TIMER[62]<timeout) AND (NOT IS_forward))
+         WAIT SEC 0.1
+      IS_forward=(NOT I_Cylinder_BWD2 AND I_Cylinder_FWD2)    
+    ENDWHILE
+    $TIMER_STOP[62]=TRUE
+    IF IS_forward == FALSE THEN
+       MsgQuit("Cylinder2 forward Timer out","Cylinder_BWD2")
+       HALT
+    ELSE
+       RETURN
+    ENDIF 
+END 
+;ENDFOLD
+;FOLD Cylinder_BWD2()
+GLOBAL DEF Cylinder_BWD2() 
+  BOOL IS_backward
+  INT timeout
+  timeout = 5000 
+   O_Cylinder_FWD2 = FALSE
+   O_Cylinder_BWD2 = TRUE
+   IS_backward=(I_Cylinder_BWD2 AND NOT I_Cylinder_FWD2)
+   $TIMER[62]=0
+    WAIT SEC 0
+    $TIMER_STOP[62]=FALSE
+    WHILE (($TIMER[62]<timeout) AND (NOT IS_backward))
+         WAIT SEC 0.1
+      IS_backward=(I_Cylinder_BWD2 AND NOT I_Cylinder_FWD2)    
+    ENDWHILE
+    $TIMER_STOP[62]=TRUE
+    IF IS_backward == FALSE THEN
+       MsgQuit("Cylinder2 backward Timer out","Cylinder_BWD2")
+       HALT
+    ELSE
+       RETURN
+    ENDIF 
+
+END 
+;ENDFOLD
+;FOLD Cylinder_FWD3()
+GLOBAL DEF Cylinder_FWD3()
+  BOOL IS_forward
+  INT timeout
+  timeout = 5000 
+   O_Cylinder_FWD1 = TRUE
+   O_Cylinder_BWD1 = FALSE 
+   IS_forward=(NOT I_Cylinder_BWD3 AND I_Cylinder_FWD3)
+   $TIMER[63]=0
+    WAIT SEC 0
+    $TIMER_STOP[63]=FALSE
+    WHILE (($TIMER[63]<timeout) AND (NOT IS_forward))
+         WAIT SEC 0.1
+      IS_forward=(NOT I_Cylinder_BWD3 AND I_Cylinder_FWD3)    
+    ENDWHILE
+    $TIMER_STOP[63]=TRUE
+    IF IS_forward == FALSE THEN
+       MsgQuit("Cylinder3 forward Timer out","Cylinder_FWD3")
+       HALT
+    ELSE
+       RETURN
+    ENDIF 
+END 
+;ENDFOLD
+;FOLD Cylinder_BWD3()
+GLOBAL DEF Cylinder_BWD3() 
+  BOOL IS_backward
+  INT timeout
+  timeout = 5000 
+   O_Cylinder_FWD1 = FALSE
+   O_Cylinder_BWD1 = TRUE
+   IS_backward=(I_Cylinder_BWD3 AND NOT I_Cylinder_FWD3)
+   $TIMER[63]=0
+    WAIT SEC 0
+    $TIMER_STOP[63]=FALSE
+    WHILE (($TIMER[63]<timeout) AND (NOT IS_backward))
+         WAIT SEC 0.1
+      IS_backward=(I_Cylinder_BWD3 AND NOT I_Cylinder_FWD3)    
+    ENDWHILE
+    $TIMER_STOP[63]=TRUE
+    IF IS_backward == FALSE THEN
+       MsgQuit("Cylinder3 backward Timer out","Cylinder_BWD3")
+       HALT
+    ELSE
+       RETURN
+    ENDIF 
+
+END 
+;ENDFOLD
+;FOLD Cylinder_FWD4()
+GLOBAL DEF Cylinder_FWD4()
+  BOOL IS_forward
+  INT timeout
+  timeout = 5000 
+   O_Cylinder_FWD1 = TRUE
+   O_Cylinder_BWD1 = FALSE 
+   IS_forward=(NOT I_Cylinder_BWD4 AND I_Cylinder_FWD4)
+   $TIMER[64]=0
+    WAIT SEC 0
+    $TIMER_STOP[64]=FALSE
+    WHILE (($TIMER[64]<timeout) AND (NOT IS_forward))
+         WAIT SEC 0.1
+      IS_forward=(NOT I_Cylinder_BWD4  AND  I_Cylinder_FWD4)    
+    ENDWHILE
+    $TIMER_STOP[64]=TRUE
+    IF IS_forward == FALSE THEN
+       MsgQuit("Cylinder4 forward Timer out","Cylinder_FWD4")
+       HALT
+    ELSE
+       RETURN
+    ENDIF 
+END 
+;ENDFOLD
+;FOLD Cylinder_BWD4()
+GLOBAL DEF Cylinder_BWD4() 
+  BOOL IS_backward
+  INT timeout
+  timeout = 5000 
+   O_Cylinder_FWD1 = FALSE
+   O_Cylinder_BWD1 = TRUE
+   IS_backward=(I_Cylinder_BWD4 AND NOT I_Cylinder_FWD4)
+   $TIMER[64]=0
+    WAIT SEC 0
+    $TIMER_STOP[64]=FALSE
+    WHILE (($TIMER[64]<timeout) AND (NOT IS_backward))
+         WAIT SEC 0.1
+      IS_backward=(I_Cylinder_BWD4 AND NOT I_Cylinder_FWD4)    
+    ENDWHILE
+    $TIMER_STOP[64]=TRUE
+    IF IS_backward == FALSE THEN
+       MsgQuit("Cylinder4 backward Timer out","Cylinder_DWD4")
+       HALT
+    ELSE
+       RETURN
+    ENDIF 
+
+END 
+;ENDFOLD
+
+;ENDFOLD

@@ -1,0 +1,105 @@
+&ACCESS R1
+DEF  Class_Basics ( )
+;FOLD Introduction
+;**************************************************
+;Function : Class_Basics                           *
+;Author : Jill                                     *
+;Date : 2023/1/18                                  *
+;**************************************************
+
+;PDat(INT toolNr:IN, INT baseNr:IN, INT speed:IN, INT acc:IN)
+;toolNr: tool number 1-16
+;baseNr: base number 1-32
+;speed: PTP speed 1-100 %
+;acc: PTP acceleration 1-100 %
+;----------------------------------------------
+;LDat(INT toolNr:IN, INT baseNr:IN, INT speed:IN, INT acc:IN)
+;toolNr: tool number 1-16
+;baseNr: base number 1-32
+;speed: LIN/CIRC speed 0.001-3 m/s
+;acc: LIN/CIRC acceleration 1-100 %
+;----------------------------------------------
+;LinSpeed(REAL spd:in,REAL acc:in)
+;spd: LIN/CIRC speed 0.001-3 m/s
+;acc: LIN/CIRC acceleration 1-100 %
+;----------------------------------------------
+;PtpSpeed(REAL spd:in,REAL acc:in)
+;spd: PTP speed 1-100 %
+;acc: LIN/CIRC acceleration 1-100 %
+;----------------------------------------------
+;ChangeBase(INT baseNr:IN)
+;baseNr: base number 1-32
+;----------------------------------------------
+;ChangeTool(INT toolNr:IN)
+;toolNr: tool number 1-16
+;----------------------------------------------
+
+;ENDFOLD
+END
+
+;FOLD ;%{H}
+;FOLD PDat(INT toolNr:IN, INT baseNr:IN, INT speed:IN, INT acc:IN)
+GLOBAL DEF PDat(toolNr:IN, baseNr:IN, speed:IN, acc:IN)
+   INT toolNr, baseNr, speed, acc
+  
+   ChangeTool(toolNr)
+   ChangeBase(baseNr)
+   PtpSpeed(speed, acc) 
+END
+;ENDFOLD (PDat)
+
+;FOLD LDat(INT toolNr:IN, INT baseNr:IN, INT speed:IN, INT acc:IN)
+GLOBAL DEF LDat(toolNr:IN, baseNr:IN, speed:IN, acc:IN)
+   INT toolNr, baseNr, speed, acc
+  
+   ChangeTool(toolNr)
+   ChangeBase(baseNr)
+   LinSpeed(speed, acc)
+END
+;ENDFOLD (LDat)
+
+;FOLD LinSpeed(REAL spd:in,REAL acc:in)
+GLOBAL DEF LinSpeed(spd:in,acc:in)
+   REAL spd,acc
+   
+   $vel.cp=spd
+   $ACC.CP=acc  
+end
+;ENDFOLD (LinSpeed)
+
+;FOLD PtpSpeed(REAL spd:in,REAL acc:in)
+GLOBAL DEF  PtpSpeed(spd:in,acc:in)
+   REAL spd,acc
+   INT i
+   for i=1 to 6
+     $VEL_AXIS[i]=spd
+     $ACC_AXIS[i]=acc
+   ENDFOR 
+end
+;ENDFOLD (PtpSpeed)
+
+;FOLD ChangeBase(INT baseNr:IN)
+GLOBAL DEF ChangeBase(baseNr:IN)
+INT baseNr
+$ACT_BASE = baseNr
+IF baseNr <= 0 THEN
+   $BASE = {X 0.0,Y 0.0,Z 0.0,A 0.0,B 0.0,C 0.0}
+ELSE
+   $BASE = BASE_DATA[baseNr]
+ENDIF
+END
+;ENDFOLD (ChangeBase)
+
+;FOLD ChangeTool(INT toolNr:IN)
+GLOBAL DEF ChangeTool(toolNr:IN)
+INT toolNr
+$ACT_TOOL = toolNr
+IF toolNr<=0 THEN
+   $TOOL = {X 0.0,Y 0.0,Z 0.0,A 0.0,B 0.0,C 0.0}
+ELSE
+   $TOOL = TOOL_DATA[toolNr]
+ENDIF
+END
+;ENDFOLD (ChangeTool)
+
+;ENDFOLD

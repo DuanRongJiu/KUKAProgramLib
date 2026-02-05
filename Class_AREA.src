@@ -1,0 +1,124 @@
+&ACCESS R1
+DEF  Class_AREA ( )
+;FOLD Introduction
+;**************************************************
+;Function : Class_AREA                            *
+;Author : Jill                                    *
+;Date : 2023/1/18                                 *
+;**************************************************
+
+;Configuration Class_AREA.dat 
+
+;AREA_INI( )
+;AREA_REQ(INT AREA :IN)  
+;INT AREA:1-8
+;AREA_REL(INT REL_AREA :IN )
+;INT REL_AREA : 1-8
+
+;ENDFOLD
+END
+
+;FOLD ;%{H}
+;FOLD AREA_INI( )
+GLOBAL DEF AREA_INI( )
+    O_AREL_1=TRUE
+    O_AREL_2=TRUE
+    O_AREL_3=TRUE
+    O_AREL_4=TRUE
+    O_AREL_5=TRUE
+    O_AREL_6=TRUE
+    O_AREL_7=TRUE
+    O_AREL_8=TRUE     
+END 
+;ENDFOLD
+;FOLD AREA_REQ(INT AREA :IN)
+;******** AREA REQUEST LOGIC **********
+GLOBAL DEF  AREA_REQ(AREA :IN)
+ INT AREA  
+ SWITCH  AREA      
+  CASE 1  
+    O_AREA_REQ_1=TRUE  
+    WHILE I_ARDY_1==FALSE      
+      O_AREA_REQ_1=TRUE     
+    ENDWHILE
+    O_AREL_1=FALSE  
+    O_AREA_REQ_1=FALSE   
+  CASE 2   
+    O_AREA_REQ_2=TRUE  
+    WHILE I_ARDY_2==FALSE      
+      O_AREA_REQ_2=TRUE     
+    ENDWHILE
+    O_AREL_2=FALSE  
+    O_AREA_REQ_2=FALSE         
+  CASE 3  
+    O_AREA_REQ_3=TRUE 
+    WHILE I_ARDY_3==FALSE       
+      O_AREA_REQ_3=TRUE    
+    ENDWHILE
+    O_AREL_3=FALSE 
+    O_AREA_REQ_3=FALSE              
+  CASE 4 
+    O_AREA_REQ_4=TRUE 
+    WHILE I_ARDY_4==FALSE      
+      O_AREA_REQ_4=TRUE    
+    ENDWHILE
+    O_AREL_4=FALSE 
+     O_AREA_REQ_4=FALSE          
+  CASE 5
+    O_AREA_REQ_5=TRUE
+    WHILE I_ARDY_5==FALSE       
+      O_AREA_REQ_5=TRUE     
+    ENDWHILE
+    O_AREL_5=FALSE 
+    O_AREA_REQ_5=FALSE      
+  CASE 6    
+    O_AREA_REQ_6=TRUE
+    WHILE I_ARDY_6==FALSE       
+      O_AREA_REQ_6=TRUE      
+    ENDWHILE
+    O_AREL_6=FALSE
+    O_AREA_REQ_6=FALSE           
+  CASE 7  
+    O_AREA_REQ_7=TRUE  
+    WHILE I_ARDY_7==FALSE       
+      O_AREA_REQ_7=TRUE
+    ENDWHILE
+    O_AREL_7=FALSE    
+    O_AREA_REQ_7=FALSE      
+  CASE 8  
+    O_AREA_REQ_8=TRUE
+    WHILE I_ARDY_8==FALSE       
+      O_AREA_REQ_8=TRUE
+    ENDWHILE
+    O_AREL_8=FALSE
+    O_AREA_REQ_8=FALSE    
+  ENDSWITCH 
+END
+;ENDFOLD
+;FOLD AREA_REL(INT REL_AREA :IN )
+;********* AREA RELEASE LOGIC **********
+GLOBAL DEF  AREA_REL(REL_AREA:IN )
+  INT REL_AREA  
+  $ADVANCE=0  
+  SWITCH  REL_AREA   	
+  CASE 1
+    O_AREL_1=TRUE
+  CASE 2
+    O_AREL_2=TRUE
+  CASE 3
+    O_AREL_3=TRUE
+  CASE 4
+    O_AREL_4=TRUE
+  CASE 5
+    O_AREL_5=TRUE
+  CASE 6
+    O_AREL_6=TRUE
+  CASE 7
+    O_AREL_7=TRUE
+  CASE 8
+    O_AREL_8=TRUE   
+  ENDSWITCH
+  $ADVANCE=3  
+END
+;ENDFOLD
+;ENDFOLD

@@ -1,0 +1,213 @@
+&ACCESS RV1
+&REL 4
+&PARAM DISKPATH = KRC:\R1\FUNCTION
+DEF  Class_EAxisAsync ( )
+;FOLD Introduction
+;**************************************************
+;Function : Class_EAxisAsync                      *
+;Author : Jill                                    *
+;Date : 2026/1/18                                 *
+;**************************************************
+;
+;AsyncRun(INT eAxisNr:IN, REAL point:IN, INT speed:IN)
+;INT eAxis_Nr : external axis number 1-6
+;REAL point : target point
+;INT speed : speed 1-100
+;-------------------------------------------------
+;AsyncStop(INT eAxis_Nr:IN)
+;INT eAxis_Nr : external axis number 1-6
+;-------------------------------------------------
+;AsyncCont(INT eAxis_Nr:IN)
+;eAxis_Nr : external axis number 1-6
+;-------------------------------------------------
+;AsyncCancel(INT eAxis_Nr:IN)
+;eAxis_Nr : external axis number 1-6
+;-------------------------------------------------
+;ExCouple(INT eAxis_Nr:IN)
+;eAxis_Nr : external axis number 1-6
+;-------------------------------------------------
+;ExDecouple(INT eAxis_Nr:IN)
+;eAxis_Nr : external axis number 1-6
+;-------------------------------------------------
+
+;ENDFOLD (Introduction)
+
+END
+
+;FOLD ;%{H}
+;FOLD AsyncRun(INT eAxisNr:IN, REAL point:IN, INT speed:IN)
+GLOBAL DEF AsyncRun(eAxisNr:IN, point:IN, speed:IN)
+INT eAxisNr, speed
+REAL point
+E6AXIS ePoint
+
+ePoint = $AXIS_ACT
+IF speed<0 THEN
+   speed = 1
+ENDIF
+IF speed>100 THEN
+   speed = 100
+ENDIF
+$OV_ASYNC = speed
+SWITCH eAxisNr
+   CASE 1
+      $ASYNC_AXIS = $ASYNC_AXIS B_EXOR 'b000001'
+      ePoint.E1 = point
+      ASYPTP ePoint
+   CASE 2
+      $ASYNC_AXIS = $ASYNC_AXIS B_EXOR 'b000010'
+      ePoint.E2 = point
+      ASYPTP ePoint
+   CASE 3
+      $ASYNC_AXIS = $ASYNC_AXIS B_EXOR 'b000100'
+      ePoint.E3 = point
+      ASYPTP ePoint
+   CASE 4
+      $ASYNC_AXIS = $ASYNC_AXIS B_EXOR 'b001000'
+      ePoint.E4 = point
+      ASYPTP ePoint
+   CASE 5
+      $ASYNC_AXIS = $ASYNC_AXIS B_EXOR 'b010000'
+      ePoint.E5 = point
+      ASYPTP ePoint
+   CASE 6
+      $ASYNC_AXIS = $ASYNC_AXIS B_EXOR 'b100000'
+      ePoint.E6 = point
+      ASYPTP ePoint
+   DEFAULT
+      
+ENDSWITCH
+END
+;ENDFOLD (AsyncRun)
+
+;FOLD AsyncStop(INT eAxis_Nr:IN)
+GLOBAL DEF AsyncStop(eAxis_Nr:IN)
+INT eAxis_Nr
+   ASYSTOP eAxis_Nr
+END
+;ENDFOLD(AsyncStop)
+
+;FOLD AsyncCont(INT eAxis_Nr:IN)
+GLOBAL DEF AsyncCont(eAxis_Nr:IN)
+INT eAxis_Nr
+   ASYCONT eAxis_Nr
+END
+;ENDFOLD(AsyncCont)
+
+;FOLD AsyncCancel(INT eAxis_Nr:IN)
+GLOBAL DEF AsyncCancel(eAxis_Nr:IN)
+INT eAxis_Nr
+   
+   SWITCH eAxis_Nr
+      CASE 1
+         ASYCANCEL 1
+         IF ($ASYNC_AXIS B_AND 'b000001')>0 THEN
+            $ASYNC_AXIS = $ASYNC_AXIS B_EXOR 'b000001'
+         ENDIF
+      CASE 2
+         ASYCANCEL 2
+         IF ($ASYNC_AXIS B_AND 'b000010')>0 THEN
+            $ASYNC_AXIS = $ASYNC_AXIS B_EXOR 'b000010'
+         ENDIF
+      CASE 3
+         ASYCANCEL 3
+         IF ($ASYNC_AXIS B_AND 'b000100')>0 THEN
+            $ASYNC_AXIS = $ASYNC_AXIS B_EXOR 'b000100'
+         ENDIF
+      CASE 4
+         ASYCANCEL 4
+         IF ($ASYNC_AXIS B_AND 'b001000')>0 THEN
+            $ASYNC_AXIS = $ASYNC_AXIS B_EXOR 'b001000'
+         ENDIF
+      CASE 5
+         ASYCANCEL 5
+         IF ($ASYNC_AXIS B_AND 'b010000')>0 THEN
+            $ASYNC_AXIS = $ASYNC_AXIS B_EXOR 'b010000'
+         ENDIF
+      CASE 6
+         ASYCANCEL 6
+         IF ($ASYNC_AXIS B_AND 'b100000')>0 THEN
+            $ASYNC_AXIS = $ASYNC_AXIS B_EXOR 'b100000'
+         ENDIF
+   ENDSWITCH
+END
+;ENDFOLD(AsyncCancel)
+
+;FOLD ExCouple(INT eAxis_Nr:IN)
+GLOBAL DEF ExCouple(eAxis_Nr:IN)
+INT eAxis_Nr
+SWITCH eAxis_Nr
+   CASE 1
+      IF (($ASYNC_EX_AX_DECOUPLE B_AND 'B000001')>0) THEN
+         $AXIS_ACT.E1 = lastEAxis[1]   
+         $ASYNC_EX_AX_DECOUPLE = $ASYNC_EX_AX_DECOUPLE B_EXOR 'b000001' 
+      ENDIF          
+   CASE 2
+      IF (($ASYNC_EX_AX_DECOUPLE B_AND 'B000010')>0) THEN
+         $AXIS_ACT.E2 = lastEAxis[2]   
+         $ASYNC_EX_AX_DECOUPLE = $ASYNC_EX_AX_DECOUPLE B_EXOR 'b000010'
+      ENDIF 
+   CASE 3
+      IF (($ASYNC_EX_AX_DECOUPLE B_AND 'B000100')>0) THEN
+         $AXIS_ACT.E3 = lastEAxis[3]   
+         $ASYNC_EX_AX_DECOUPLE = $ASYNC_EX_AX_DECOUPLE B_EXOR 'b000100'
+      ENDIF 
+   CASE 4
+      IF (($ASYNC_EX_AX_DECOUPLE B_AND 'B001000')>0) THEN
+         $AXIS_ACT.E4 = lastEAxis[4]   
+         $ASYNC_EX_AX_DECOUPLE = $ASYNC_EX_AX_DECOUPLE B_EXOR 'b001000'
+      ENDIF 
+   CASE 5
+      IF (($ASYNC_EX_AX_DECOUPLE B_AND 'B010000')>0) THEN      
+         $AXIS_ACT.E5 = lastEAxis[5]                      
+         $ASYNC_EX_AX_DECOUPLE = $ASYNC_EX_AX_DECOUPLE B_EXOR 'b010000'
+      ENDIF 
+   CASE 6
+      IF (($ASYNC_EX_AX_DECOUPLE B_AND 'B100000')>0) THEN      
+         $AXIS_ACT.E6 = lastEAxis[6]                      
+         $ASYNC_EX_AX_DECOUPLE = $ASYNC_EX_AX_DECOUPLE B_EXOR 'b100000'
+      ENDIF 
+ENDSWITCH
+   
+END
+;ENDFOLD(ExCouple)
+
+;FOLD ExDecouple(INT eAxis_Nr:IN)
+GLOBAL DEF ExDecouple(eAxis_Nr:IN)
+INT eAxis_Nr
+SWITCH eAxis_Nr
+   CASE 1
+      IF (($ASYNC_EX_AX_DECOUPLE B_AND 'B000001')==0) THEN
+         lastEAxis[1] = $AXIS_ACT.E1
+         $ASYNC_EX_AX_DECOUPLE = $ASYNC_EX_AX_DECOUPLE B_EXOR 'b000001'      
+      ENDIF
+   CASE 2 
+      IF (($ASYNC_EX_AX_DECOUPLE B_AND 'B000010')==0) THEN      
+         lastEAxis[2] = $AXIS_ACT.E2      
+         $ASYNC_EX_AX_DECOUPLE = $ASYNC_EX_AX_DECOUPLE B_EXOR 'b000010'
+      ENDIF
+   CASE 3
+      IF (($ASYNC_EX_AX_DECOUPLE B_AND 'B000100')==0) THEN
+         lastEAxis[3] = $AXIS_ACT.E3      
+         $ASYNC_EX_AX_DECOUPLE = $ASYNC_EX_AX_DECOUPLE B_EXOR 'b000100'
+      ENDIF
+   CASE 4
+      IF (($ASYNC_EX_AX_DECOUPLE B_AND 'B001000')==0) THEN
+         lastEAxis[4] = $AXIS_ACT.E4                                           
+         $ASYNC_EX_AX_DECOUPLE = $ASYNC_EX_AX_DECOUPLE B_EXOR 'b001000'
+      ENDIF
+   CASE 5
+      IF (($ASYNC_EX_AX_DECOUPLE B_AND 'B010000')==0) THEN
+         lastEAxis[5] = $AXIS_ACT.E5                                           
+         $ASYNC_EX_AX_DECOUPLE = $ASYNC_EX_AX_DECOUPLE B_EXOR 'b010000'
+      ENDIF
+   CASE 6
+      IF (($ASYNC_EX_AX_DECOUPLE B_AND 'B100000')==0) THEN
+         lastEAxis[6] = $AXIS_ACT.E6                                           
+         $ASYNC_EX_AX_DECOUPLE = $ASYNC_EX_AX_DECOUPLE B_EXOR 'b100000'
+      ENDIF
+ENDSWITCH 
+END
+;ENDFOLD(ExDecouple)
+
+;ENDFOLD

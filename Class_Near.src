@@ -1,0 +1,156 @@
+&ACCESS R1
+DEF  Class_Near ( )
+;FOLD Introduction
+;**************************************************
+;Function : Class_RobNear                         *
+;Author : Jill                                    *
+;Date : 2023/1/18                                 *
+;**************************************************
+;deffct bool AxisNear(AXIS comparison:in)
+;deffct bool E6AxisNear(AXIS comparison:in)
+;deffct bool PosNear(E6POS comparison:IN)
+;deffct bool E6PosNear(E6POS comparison:IN)
+;ENDFOLD
+END
+;FOLD ;%{H}
+;FOLD bool AxisNear(AXIS comparison:in)
+global deffct bool AxisNear(comparison:in)
+axis comparison
+E6axis actAxis
+  actAxis=$AXIS_ACT
+  IF ABS(comparison.a1-actAxis.a1)>2 THEN
+    RETURN(FALSE)
+  ENDIF
+  IF ABS(comparison.a2-actAxis.a2)>2 THEN
+    RETURN(FALSE)
+  ENDIF
+  IF ABS(comparison.a3-actAxis.a3)>2 THEN
+    RETURN(FALSE)
+  ENDIF
+  IF ABS(comparison.a4-actAxis.a4)>2 THEN
+    RETURN(FALSE)
+  ENDIF
+  IF ABS(comparison.a5-actAxis.a5)>2 THEN
+    RETURN(FALSE)
+  endIF
+  IF ABS(comparison.a6-actAxis.a6)>2 THEN
+    RETURN(FALSE)
+  ENDIF
+  RETURN(TRUE)
+endfct
+;ENDFOLD
+;FOLD bool E6AxisNear(AXIS comparison:in)
+global deffct bool E6AxisNear(comparison:in)
+E6axis comparison
+E6axis actAxis
+  actAxis=$AXIS_ACT
+  IF ABS(comparison.a1-actAxis.a1)>2 THEN
+    RETURN(FALSE)
+  ENDIF
+  IF ABS(comparison.a2-actAxis.a2)>2 THEN
+    RETURN(FALSE)
+  ENDIF
+  IF ABS(comparison.a3-actAxis.a3)>2 THEN
+    RETURN(FALSE)
+  ENDIF
+  IF ABS(comparison.a4-actAxis.a4)>2 THEN
+    RETURN(FALSE)
+  ENDIF
+  IF ABS(comparison.a5-actAxis.a5)>2 THEN
+    RETURN(FALSE)
+  endIF
+  IF ABS(comparison.a6-actAxis.a6)>2 THEN
+    RETURN(FALSE)
+  ENDIF
+  IF ABS(comparison.E1-actAxis.E1)>2 THEN
+    RETURN(FALSE)
+  ENDIF
+  IF ABS(comparison.E2-actAxis.E2)>2 THEN
+    RETURN(FALSE)
+  ENDIF
+  IF ABS(comparison.E3-actAxis.E3)>2 THEN
+    RETURN(FALSE)
+  ENDIF
+  IF ABS(comparison.E4-actAxis.E4)>2 THEN
+    RETURN(FALSE)
+  ENDIF
+  IF ABS(comparison.E5-actAxis.E5)>2 THEN
+    RETURN(FALSE)
+  ENDIF
+  IF ABS(comparison.E6-actAxis.E6)>2 THEN
+    RETURN(FALSE)
+  ENDIF
+  RETURN(TRUE)
+endfct
+;ENDFOLD
+;FOLD bool PosNear(E6POS comparison:IN)
+GLOBAL DEFFCT bool PosNear(comparison:IN)
+E6POS comparison
+E6POS actPos
+   actPos = $POS_ACT
+   IF ABS(comparison.X-actPos.X)>2 THEN
+      RETURN FALSE
+   ENDIF
+   IF ABS(comparison.Y-actPos.Y)>2 THEN
+      RETURN FALSE
+   ENDIF
+   IF ABS(comparison.Z-actPos.Z)>2 THEN
+      RETURN FALSE
+   ENDIF
+   IF ABS(comparison.A-actPos.A)>2 THEN
+      RETURN FALSE
+   ENDIF
+   IF ABS(comparison.B-actPos.B)>2 THEN
+      RETURN FALSE
+   ENDIF
+   IF ABS(comparison.C-actPos.C)>2 THEN
+      RETURN FALSE
+   ENDIF
+   RETURN TRUE 
+ENDFCT
+;ENDFOLD
+;FOLD bool E6PosNear(E6POS comparison:IN)
+GLOBAL DEFFCT bool E6PosNear(comparison:IN)
+E6POS comparison
+E6POS actPos
+   actPos = $POS_ACT
+   IF ABS(comparison.X-actPos.X)>2 THEN
+      RETURN FALSE
+   ENDIF
+   IF ABS(comparison.Y-actPos.Y)>2 THEN
+      RETURN FALSE
+   ENDIF
+   IF ABS(comparison.Z-actPos.Z)>2 THEN
+      RETURN FALSE
+   ENDIF
+   IF ABS(comparison.A-actPos.A)>2 THEN
+      RETURN FALSE
+   ENDIF
+   IF ABS(comparison.B-actPos.B)>2 THEN
+      RETURN FALSE
+   ENDIF
+   IF ABS(comparison.C-actPos.C)>2 THEN
+      RETURN FALSE
+   ENDIF
+   IF ABS(comparison.E1-actPos.E1)>2 THEN
+     RETURN(FALSE)
+   ENDIF
+   IF ABS(comparison.E2-actPos.E2)>2 THEN
+     RETURN(FALSE)
+   ENDIF
+   IF ABS(comparison.E3-actPos.E3)>2 THEN
+     RETURN(FALSE)
+   ENDIF
+   IF ABS(comparison.E4-actPos.E4)>2 THEN
+     RETURN(FALSE)
+   ENDIF
+   IF ABS(comparison.E5-actPos.E5)>2 THEN
+     RETURN(FALSE)
+   ENDIF
+   IF ABS(comparison.E6-actPos.E6)>2 THEN
+     RETURN(FALSE)
+   ENDIF
+   RETURN TRUE 
+ENDFCT
+;ENDFOLD
+;ENDFOLD

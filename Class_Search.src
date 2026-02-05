@@ -1,0 +1,59 @@
+&ACCESS R1
+DEF  Class_Search ( )
+;FOLD Introduction
+;**************************************************
+;Function : Class_Search                          *
+;Author : Jill                                    *
+;Date : 2021/3/15                                 *
+;**************************************************
+;INTERRUPT DECL 20
+;SEARCH(AXIS_OF_COORDINATES Coordinate:in,REAL Length:in,REAL Speed:IN)
+;
+;SEARCH(#x,100,0.1)
+;AXIS_OF_COORDINATES Coordinate =#X,#Y,#Z
+
+;ENDFOLD
+END
+;FOLD ;%{H}
+;FOLD SEARCH(AXIS_OF_COORDINATES Coordinate:in,REAL Length:in,REAL Speed:IN)
+GLOBAL DEF SEARCH(Coordinate:in,Length:in,Speed:IN) 
+DECL REAL Length
+DECL AXIS_OF_COORDINATES Coordinate 
+DECL REAL Speed
+INTERRUPT DECL 20 WHEN I_WithPart==TRUE DO SEARCH_STOP()
+SEARCH_RUN(Coordinate,Length,Speed)
+INTERRUPT OFF 20
+END
+DEF SEARCH_RUN (Coordinate:IN,Length:IN,Speed:OUT)
+E6POS ENDSEARCH
+DECL REAL Length
+DECL AXIS_OF_COORDINATES Coordinate 
+DECL REAL Speed
+IF Speed>1 THEN
+   Speed = 0.01
+ENDIF
+$ADVANCE=0
+INTERRUPT ON 20
+$VEL.CP=Speed
+PTP $POS_ACT
+ENDSEARCH=$POS_ACT
+SWITCH Coordinate 
+CASE #X
+   ENDSEARCH.X=ENDSEARCH.X+Length
+CASE #Y
+   ENDSEARCH.Y=ENDSEARCH.Y+Length
+CASE #Z
+   ENDSEARCH.Z=ENDSEARCH.Z+Length
+ENDSWITCH
+LIN ENDSEARCH
+INTERRUPT OFF 20
+END 
+GLOBAL DEF SEARCH_STOP()
+INTERRUPT OFF 20
+BRAKE F
+START_DROP_POS=$POS_INT
+PTP $POS_INT
+RESUME
+END
+;ENDFOLD
+;ENDFOLD

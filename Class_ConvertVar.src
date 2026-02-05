@@ -1,0 +1,146 @@
+&ACCESS R1
+&REL 2
+&COMMENT V01
+DEF  Class_ConvertVar ( )
+;FOLD introduce 
+;**************************************
+;* Function : ConvertVar              *
+;* Author:Jill                        *
+;* Date:2023/06/10                    *
+;* Version:V01                        *
+;**************************************
+
+;----------Global subroutines and functions: -------
+;REAL Bit32ToReal(INT signalVar:IN)
+;INT RealTO32Bit(REAL realVar:IN)  
+;CHAR[32] IntToChar(INT IntVar:IN)
+;CHAR[32] RealToChar(REAL realVar:IN)
+;INT CharToInt(CHAR str[]:IN)
+;REAL CharToReal(CHAR str[]:IN)
+;
+;----------Explainations for parameters:------------
+;signalVar: TYPE INT, Variable to be converted
+;realVar: TYPE REAL, Variable to be converted
+;IntVar: TYPE INT, Variable to be converted
+;realVar: TYPE REAL, Variable to be converted
+;str[]: TYPE CHAR[], Variable to be converted
+;
+;----------System resources-------------------------
+;MsgLib.dat
+;
+;----------Examples: -------------------------------
+;r = Bit32ToReal(signalVar) 
+;i = RealTO32Bit(realVar) 
+;str[] = IntToChar(IntVar)
+;str[] = RealToChar(realVar)
+;i = CharToInt(str[])
+;i = CharToReal(str[])
+;
+;ENDFOLD
+END
+
+;FOLD ;%{H}
+;FOLD REAL Bit32ToReal(INT signalVar:IN)
+GLOBAL DEFFCT REAL Bit32ToReal(signalVar:IN) 
+   INT offset, signalVar
+   REAL realVar
+   CHAR buffer[8] ;tmpbuffer   
+
+   offset=0
+   CAST_TO(buffer[],offset,signalVar)   ;signal to tmpbuffer 
+   offset=0
+   CAST_FROM(buffer[],offset,realVar)   ;tmpbuffer to real
+   RETURN (realVar)  
+ENDFCT 
+;ENDFOLD (Bit32ToReal)
+
+;FOLD INT RealTO32Bit(REAL realVar:IN) 
+GLOBAL  DEFFCT INT RealTO32Bit(realVar:IN) 
+   INT offset,ourVar
+   REAL realVar
+   CHAR buffer[8] ;tmpbuffer 
+
+    offset = 0
+    cast_to(buffer[],offset,realVar)   ; real to tmpbuffer
+    offset = 0
+    CAST_FROM(buffer[],offset,ourVar) ; tmpbuffer to signal
+    RETURN (ourVar)
+ENDFCT
+;ENDFOLD (RealTO32Bit)
+
+;FOLD CHAR[32] IntToChar(INT IntVar:IN)
+GLOBAL DEFFCT CHAR[32] IntToChar(IntVar:IN)
+   INT IntVar
+   CHAR str[32]
+   DECL STATE_T state
+   INT offset
+    str[] = " "
+    offset = 0
+    SWRITE (str[], state, offset, "%d", IntVar)
+RETURN str[]
+ENDFCT
+;ENDFOLD (IntToChar)
+
+;FOLD CHAR[32] RealToChar(REAL realVar:IN)
+GLOBAL DEFFCT CHAR[32] RealToChar(realVar:IN)
+   REAL realVar
+   CHAR str[32]
+   DECL STATE_T state
+   INT offset
+    str[] = " "
+    offset = 0
+    SWRITE (str[], state, offset, "%.4f", realVar)
+RETURN str[]
+ENDFCT
+;ENDFOLD (RealToChar)
+
+;FOLD INT CharToInt(CHAR str[]:IN)
+GLOBAL DEFFCT INT CharToInt(str[]:IN)
+   CHAR str[]
+   INT i
+   BOOL b
+   b = STRTOINT(str[], i)
+   RETURN i
+ENDFCT
+;ENDFOLD (CharToInt)
+
+;FOLD REAL CharToReal(CHAR str[]:IN)
+GLOBAL DEFFCT REAL CharToReal(str[]:IN)
+   CHAR str[]
+   REAL r
+   BOOL b
+   b = STRTOREAL(str[], r)
+   RETURN r
+ENDFCT
+;ENDFOLD (CharToReal)
+
+;FOLD CHAR[5] BoolToStr(BOOL boolVar:IN)
+GLOBAL DEFFCT CHAR[5] BoolToStr(boolVar:IN)
+   DECL BOOL boolVar
+   DECL CHAR str[5]
+   
+   str[] = " "
+   IF boolVar THEN 
+      str[] = "True"
+   ELSE
+      str[] = "False"
+   ENDIF
+   RETURN str[]
+ENDFCT
+;ENDFOLD
+
+;FOLD CHAR[5] BoolToChar(BOOL boolVar:IN)
+GLOBAL DEFFCT CHAR[1] BoolToChar(boolVar:IN)
+   DECL BOOL boolVar,b
+   DECL CHAR str[1]
+   DECL STATE_T state
+   DECL INT offset
+   
+   str[] = " "
+   offset = 0
+   SWRITE(str[], state, offset, "%i", boolVar)
+   RETURN str[]
+ENDFCT
+;ENDFOLD
+
+;ENDFOLD

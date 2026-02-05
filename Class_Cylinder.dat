@@ -1,0 +1,49 @@
+&ACCESS RV1
+&REL 1
+DEFDAT Class_Cylinder PUBLIC
+;FOLD Introduction
+;**************************************************
+;Function : Class_Cylinder                        *
+;Author : jiu                                     *
+;Date : 2023/1/18                                 *
+;**************************************************
+;ENDFOLD
+;****Cylinder1()********************************
+; O_Cylinder_FWD: Output valve forward
+; O_Cylinder_BWD: Output valve backward
+; I_Cylinder_FWD: INput valve forward
+; I_Cylinder_BWD: INput valve backward
+SIGNAL O_Cylinder_FWD1 $OUT[10]
+SIGNAL I_Cylinder_FWD1 $IN[10]
+SIGNAL O_Cylinder_BWD1 $OUT[11]
+SIGNAL I_Cylinder_BWD1 $IN[11]
+;****Cylinder2()********************************
+; O_Cylinder_FWD: Output valve forward
+; O_Cylinder_BWD: Output valve backward
+; I_Cylinder_FWD: INput valve forward
+; I_Cylinder_BWD: INput valve backward
+SIGNAL O_Cylinder_FWD2 $OUT[4096]
+SIGNAL I_Cylinder_FWD2 $IN[1026]
+SIGNAL O_Cylinder_BWD2 $OUT[4096]
+SIGNAL I_Cylinder_BWD2 $IN[1026]
+;****Cylinder3()********************************
+; O_Cylinder_FWD: Output valve forward
+; O_Cylinder_BWD: Output valve backward
+; I_Cylinder_FWD: INput valve forward
+; I_Cylinder_BWD: INput valve backward
+SIGNAL O_Cylinder_FWD3 $OUT[4096]
+SIGNAL I_Cylinder_FWD3 $IN[1026]
+SIGNAL O_Cylinder_BWD3 $OUT[4096]
+SIGNAL I_Cylinder_BWD3 $IN[1026]
+;****Cylinder4()********************************
+; O_Cylinder_FWD: Output valve forward
+; O_Cylinder_BWD: Output valve backward
+; I_Cylinder_FWD: INput valve forward
+; I_Cylinder_BWD: INput valve backward
+SIGNAL O_Cylinder_FWD4 $OUT[4096]
+SIGNAL I_Cylinder_FWD4 $IN[1026]
+SIGNAL O_Cylinder_BWD4 $OUT[4096]
+SIGNAL I_Cylinder_BWD4 $IN[1026]
+
+
+ENDDAT

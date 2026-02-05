@@ -1,0 +1,94 @@
+&ACCESS RV1
+DEF Class_Offset( )
+;FOLD ; Introduction ;%{PE} 
+;**************************************************
+;Function : Base Offset                           *
+;Author : Jill                                    *
+;Date : 2023/1/18                                 *
+;**************************************************
+;GLOBAL DEFFCT FRAME OffsAdd(point:IN, offs:IN)
+;FRAME point 
+;FRAME offs 
+;--------------------------------------------------
+;GLOBAL DEFFCT FRAME OffsGeometric(point:IN, offs:IN)
+;FRAME point 
+;FRAME offs
+;--------------------------------------------------
+
+ 
+;ENDFOLD (Introduction )
+END
+
+;FOLD ;%{h}
+
+;FOLD FRAME OffsAdd(point:IN, offs:IN)  
+GLOBAL DEFFCT FRAME OffsAdd(point:IN, offs:IN)
+FRAME point, offs
+ON_ERROR_PROCEED 
+point.X = point.x+offs.X
+ON_ERROR_PROCEED 
+point.Y = point.Y+offs.Y
+ON_ERROR_PROCEED 
+point.Z = point.Z+offs.Z
+ON_ERROR_PROCEED 
+point.A = point.A+offs.A
+ON_ERROR_PROCEED 
+point.B = point.B+offs.B
+ON_ERROR_PROCEED 
+point.C = point.C+offs.C
+
+RETURN point
+ENDFCT
+;ENDFOLD
+
+;FOLD FRAME OffsGeometric(point:IN, offs:IN)   
+GLOBAL DEFFCT FRAME OffsGeometric(point:IN, offs:IN)
+FRAME point, offs, pOffs
+pOffs = {X 0.0, Y 0.0, Z 0.0, A 0.0, B 0.0, C 0.0}
+  ON_ERROR_PROCEED 
+  pOffs.X = pOffs.X+offs.X
+  ON_ERROR_PROCEED 
+  pOffs.Y = pOffs.Y+offs.Y
+  ON_ERROR_PROCEED 
+  pOffs.Z = pOffs.Z+offs.Z
+  ON_ERROR_PROCEED 
+  pOffs.A = pOffs.A+offs.A
+  ON_ERROR_PROCEED 
+  pOffs.B = pOffs.B+offs.B
+  ON_ERROR_PROCEED 
+  pOffs.C = pOffs.C+offs.C
+
+RETURN point:pOffs
+ENDFCT
+;ENDFOLD
+
+
+;FOLD FRAME OffsAdd_POS(point:IN, offs:IN)  
+GLOBAL DEFFCT POS OffsAdd_POS(point:IN, offs:IN)
+POS point, pItem 
+E6AXIS pAxis
+FRAME pFrame
+POS offs
+
+point.X = point.x+offs.X
+point.Y = point.Y+offs.Y
+point.Z = point.Z+offs.Z
+point.A = point.A+offs.A
+point.B = point.B+offs.B
+point.C = point.C+offs.C
+pFrame = point
+;E6AXIS INVERSE(E6POS TOOLPOS :IN,E6AXIS START_AXIS :IN,INT STATUS :OUT)
+pAxis = INVERSE(pFrame, $AXIS_ACT, point.S)
+;HALT
+;E6POS FORWARD(E6AXIS AXVAL :IN,INT STATUS :OUT)
+point = FORWARD(pAxis, point.S)
+;halt
+RETURN point
+ENDFCT
+;ENDFOLD
+
+
+
+
+
+;ENDFOLD

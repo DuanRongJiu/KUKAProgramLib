@@ -1,0 +1,33 @@
+&ACCESS RO1
+DEF  Class_MonitorInput ( )
+;FOLD Introduction
+;**************************************************
+;Function : Class_Monitor_input                   *
+;Author : Jill                                    *
+;Date : 2023/1/18                                 *
+;**************************************************
+;INTERRUPT 21
+
+;monitor_in_start(INT signalNr:in)
+;monitor_in_stop()
+
+;ENDFOLD
+END
+
+;FOLD ;%{H}
+;FOLD monitor_in_start(INT signalNr:in)
+GLOBAL DEF monitor_in_start(signalNr:in)
+INT signalNr
+GLOBAL INTERRUPT DECL 21 WHEN $IN[signalNr] == FALSE DO STOP_monitor()  
+   INTERRUPT ON 21
+END 
+DEF STOP_monitor( )
+MsgQuit("monitor Signal is FALSE", "monitor_in")
+END
+;ENDFOLD
+;FOLD monitor_in_stop()
+GLOBAL DEF monitor_in_stop()
+   INTERRUPT OFF 21
+END 
+;ENDFOLD
+;ENDFOLD
